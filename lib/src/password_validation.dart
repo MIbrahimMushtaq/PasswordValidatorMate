@@ -51,7 +51,7 @@ class PasswordValidation extends StatelessWidget {
                 ),
               ],
             ),
-            if (divider != null) divider!,
+            SizedBox(height: 10)
           ],
         );
       }).toList(),

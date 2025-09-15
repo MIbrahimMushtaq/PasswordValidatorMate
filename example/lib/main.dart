@@ -7,22 +7,58 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text("Password Validator Example")),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: PasswordValidation(
-            password: "Abc123!",
-            rules: [
-              PasswordValidators.minMaxLength(min: 6, max: 12).copyWith(
-                passedWidget: const Icon(Icons.thumb_up, color: Colors.green),
-                failedWidget: const Icon(Icons.thumb_down, color: Colors.red),
+    return const MaterialApp(
+      home: PasswordValidationScreen(),
+    );
+  }
+}
+
+class PasswordValidationScreen extends StatefulWidget {
+  const PasswordValidationScreen({super.key});
+
+  @override
+  State<PasswordValidationScreen> createState() =>
+      _PasswordValidationScreenState();
+}
+
+class _PasswordValidationScreenState extends State<PasswordValidationScreen> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Password Validator Example")),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextFormField(
+              controller: _controller,
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: 'Enter Password',
+                border: OutlineInputBorder(),
               ),
-              PasswordValidators.hasNumber(),
-            ],
-            divider: const Divider(),
-          ),
+              onChanged: (value) {
+                setState(() {}); // Rebuild to update PasswordValidation
+              },
+            ),
+            const SizedBox(height: 20),
+            PasswordValidation(
+              password: _controller.text,
+              rules: [
+                PasswordValidators.hasLowerCase(),
+                PasswordValidators.noSpacesOrSymbols(),
+              ],
+              divider: const Divider(),
+            ),
+          ],
         ),
       ),
     );

@@ -1,9 +1,11 @@
-
 ````markdown
 # Password Validator Mate
 
 A fully customizable **Flutter password validation widget**.  
 Supports **default rules**, **custom rules**, **custom icons/widgets**, colors, and flexible validations.
+
+---
+
 ## Screenshots
 
 ### Static Screenshot
@@ -41,13 +43,7 @@ dependencies:
   password_validator_mate: ^1.0.0
 ````
 
-Then run:
-
-```bash
-flutter pub get
-```
-
-Or if using Git:
+Or install directly from Git:
 
 ```yaml
 dependencies:
@@ -55,6 +51,12 @@ dependencies:
     git:
       url: https://github.com/yourusername/password_validator_mate.git
       ref: main
+```
+
+Then run:
+
+```bash
+flutter pub get
 ```
 
 ---
@@ -126,7 +128,7 @@ PasswordValidators.minMaxLength(min: 6, max: 12).copyWith(
 );
 ```
 
-**Custom Rules Example:**
+**Custom Rule Example:**
 
 ```dart
 PasswordRule(
@@ -139,14 +141,14 @@ PasswordRule(
 
 ## Default Rules
 
-| Rule              | Description                                             |                     |
-| ----------------- | ------------------------------------------------------- | ------------------- |
-| Min/Max Length    | Password must be within specified length (default 8–16) |                     |
-| Uppercase Letter  | At least 1 uppercase letter                             |                     |
-| Lowercase Letter  | At least 1 lowercase letter                             |                     |
-| Number            | At least 1 number                                       |                     |
-| No Spaces/Symbols | No spaces or \`. , -                                    | / = \_\` by default |
-| Case Sensitivity  | Passwords are case sensitive                            |                     |
+| Rule              | Description                                             |
+| ----------------- | ------------------------------------------------------- |
+| Min/Max Length    | Password must be within specified length (default 8–16) |
+| Uppercase Letter  | At least 1 uppercase letter                             |
+| Lowercase Letter  | At least 1 lowercase letter                             |
+| Number            | At least 1 number                                       |
+| No Spaces/Symbols | No spaces or `. , - / = _` by default                   |
+| Case Sensitivity  | Passwords are case sensitive                            |
 
 See [RULES.md](RULES.md) for more details.
 

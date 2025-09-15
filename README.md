@@ -4,9 +4,14 @@
 
 A fully customizable **Flutter password validation widget**.  
 Supports **default rules**, **custom rules**, **custom icons/widgets**, colors, and flexible validations.
+## Screenshots
 
-![Password Validator Screenshot](screenshots/s1.png)
-![Password Validator Screenshot](screenshots/s2.png)
+### Static Screenshot
+![Validator Screenshot 1](screenshots/s1.png)
+
+### Another Screenshot
+![Validator Screenshot 2](screenshots/s2.png)
+
 ---
 
 ## Features

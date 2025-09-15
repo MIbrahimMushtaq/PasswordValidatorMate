@@ -1,0 +1,42 @@
+# Password Validator Rules
+
+This package provides customizable password validation rules.
+
+## Default Rules
+
+1. **Min/Max Length**
+   - Default: 8–16 characters
+   - Can be customized per rule
+   - Example: `PasswordValidators.minMaxLength(min: 6, max: 12)`
+
+2. **Uppercase Letter**
+   - At least 1 uppercase letter required
+   - Example: `PasswordValidators.hasUpperCase()`
+
+3. **Lowercase Letter**
+   - At least 1 lowercase letter required
+   - Example: `PasswordValidators.hasLowerCase()`
+
+4. **Number**
+   - At least 1 number required
+   - Example: `PasswordValidators.hasNumber()`
+
+5. **No Spaces or Symbols**
+   - Disallows spaces and `. , - | / = _` by default
+   - Can customize symbols via `disallowed` parameter
+   - Example: `PasswordValidators.noSpacesOrSymbols(disallowed: r".,#%")`
+
+6. **Case Sensitivity Info**
+   - Passwords are case sensitive
+   - Always included
+   - Example: `PasswordValidators.caseSensitiveInfo()`
+
+## Custom Rules
+You can define custom rules with your own validator function:
+
+```dart
+PasswordRule(
+  description: "No repeated characters",
+  validator: (password) => !RegExp(r'(.)\1').hasMatch(password),
+);
+

@@ -52,10 +52,6 @@ class _PasswordValidationScreenState extends State<PasswordValidationScreen> {
             const SizedBox(height: 20),
             PasswordValidation(
               password: _controller.text,
-              rules: [
-                PasswordValidators.hasLowerCase(),
-                PasswordValidators.noSpacesOrSymbols(),
-              ],
               divider: const Divider(),
             ),
           ],

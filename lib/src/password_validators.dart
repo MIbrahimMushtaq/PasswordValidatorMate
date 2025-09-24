@@ -12,32 +12,40 @@ class PasswordValidators {
     ];
   }
 
-  static PasswordRule minMaxLength({int min = 8, int max = 16}) {
+  static PasswordRule minMaxLength({int min = 8, int? max}) {
     return PasswordRule(
       minLength: min,
       maxLength: max,
-      description: "Must be between $min–$max characters",
-      validator: (p) => p.length >= min && p.length <= max,
+      description: max == null
+          ? "Must be at least $min characters"
+          : "Must be between $min–$max characters",
+      validator: (p) {
+        if (max == null) {
+          return p.length >= min;
+        }
+        return p.length >= min && p.length <= max;
+      },
     );
   }
 
-  static PasswordRule hasUpperCase() {
+
+  static PasswordRule hasUpperCase({String? descriptionForUpperCase}) {
     return PasswordRule(
-      description: "At least 1 uppercase letter",
+      description: descriptionForUpperCase ?? "At least One uppercase letter",
       validator: (p) => p.contains(RegExp(r'[A-Z]')),
     );
   }
 
-  static PasswordRule hasLowerCase() {
+  static PasswordRule hasLowerCase({String? descriptionForLowerCase}) {
     return PasswordRule(
-      description: "At least 1 lowercase letter",
+      description: descriptionForLowerCase ?? "At least One lowercase letter",
       validator: (p) => p.contains(RegExp(r'[a-z]')),
     );
   }
 
-  static PasswordRule hasNumber() {
+  static PasswordRule hasNumber({String? descriptionForNumber}) {
     return PasswordRule(
-      description: "At least 1 number",
+      description: descriptionForNumber ?? "At least One number",
       validator: (p) => p.contains(RegExp(r'[0-9]')),
     );
   }

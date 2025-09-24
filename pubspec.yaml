@@ -1,7 +1,13 @@
 name: password_validator_mate
 description: "A fully customizable Flutter password validation widget with flexible rules, icons, and colors."
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/MIbrahimMushtaq/PasswordValidatorMate
+
+screenshots:
+  - path: screenshots/s1.png
+    description: 'Basic password validation'
+  - path: screenshots/s2.png
+    description: 'Custom colors and icons'
 
 environment:
   sdk: ^3.8.1

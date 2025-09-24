@@ -23,6 +23,7 @@ class PasswordValidationScreen extends StatefulWidget {
 
 class _PasswordValidationScreenState extends State<PasswordValidationScreen> {
   final TextEditingController _controller = TextEditingController();
+  bool isPasswordValid = false;
 
   @override
   void dispose() {
@@ -52,8 +53,21 @@ class _PasswordValidationScreenState extends State<PasswordValidationScreen> {
             const SizedBox(height: 20),
             PasswordValidation(
               password: _controller.text,
-              divider: const Divider(),
+              passWidget: Icon(Icons.check, color: Colors.green),
+              failedWidget: Icon(Icons.close, color: Colors.red),
+              onValidationChanged: (allPassed, results) {
+                isPasswordValid = allPassed;  // ✅ store status
+                print("All passed: $allPassed");
+                print(results); // {Must be at least 8 characters: true, At least one number: false}
+              },
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: isPasswordValid ? (){
+                print('Registering user with password: ${_controller.text}');
+              } : null,
+              child: Text("Register"),
+            )
           ],
         ),
       ),

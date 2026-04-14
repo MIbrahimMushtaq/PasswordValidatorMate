@@ -28,7 +28,6 @@ class PasswordValidators {
     );
   }
 
-
   static PasswordRule hasUpperCase({String? descriptionForUpperCase}) {
     return PasswordRule(
       description: descriptionForUpperCase ?? "At least One uppercase letter",

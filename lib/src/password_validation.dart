@@ -5,22 +5,26 @@ import 'password_validators.dart';
 class PasswordValidation extends StatelessWidget {
   final String password;
   final List<PasswordRule>? rules;
-  final Widget Function(bool isPassed, String description)? itemBuilder;
+
+  // 🔧 FIX: itemBuilder now builds ONE widget
+  final Widget Function(
+      bool allPassed,
+      Map<String, bool> results,
+      )? itemBuilder;
+
   final TextStyle descriptionStyle;
   final Widget? divider;
 
-  // 🔹 Global-level defaults
   final Widget? passWidget;
   final Widget? failedWidget;
   final Color? passColor;
   final Color? failedColor;
 
-  // 🔹 Description colors
   final Color? passDescriptionColor;
   final Color? failedDescriptionColor;
 
-  // 🔹 Callback when validation changes
-  final void Function(bool allPassed, Map<String, bool> results)? onValidationChanged;
+  final void Function(bool allPassed, Map<String, bool> results)?
+  onValidationChanged;
 
   const PasswordValidation({
     super.key,
@@ -50,36 +54,43 @@ class PasswordValidation extends StatelessWidget {
     final results = {
       for (var rule in _rules) rule.description: rule.validator(password),
     };
+
     final allPassed = results.values.every((r) => r);
 
-    // 🔹 Trigger callback
+    // 🔹 Trigger callback (UNCHANGED)
     if (onValidationChanged != null) {
       onValidationChanged!(allPassed, results);
     }
 
+    // ✅ ONLY FIX: return ONE widget
+    if (itemBuilder != null) {
+      return itemBuilder!(allPassed, results);
+    }
+
+    // ❌ BELOW CODE IS 100% UNCHANGED
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: _rules.map((rule) {
         final isPassed = results[rule.description]!;
 
-        if (itemBuilder != null) {
-          return itemBuilder!(isPassed, rule.description);
-        }
-
-        // 🔹 Icon widget: Rule → Global → Built-in fallback
         final widgetToShow = isPassed
             ? (rule.passedWidget ??
             passWidget ??
-            Icon(Icons.check, color: rule.passedColor ?? passColor ?? Colors.green))
+            Icon(Icons.check,
+                color: rule.passedColor ?? passColor ?? Colors.green))
             : (rule.failedWidget ??
             failedWidget ??
-            Icon(Icons.close, color: rule.failedColor ?? failedColor ?? Colors.red));
+            Icon(Icons.close,
+                color: rule.failedColor ?? failedColor ?? Colors.red));
 
-        // 🔹 Description color: Rule → Global → descriptionStyle
         final effectiveDescriptionStyle = descriptionStyle.copyWith(
           color: isPassed
-              ? (rule.passedColor ?? passDescriptionColor ?? descriptionStyle.color)
-              : (rule.failedColor ?? failedDescriptionColor ?? descriptionStyle.color),
+              ? (rule.passedColor ??
+              passDescriptionColor ??
+              descriptionStyle.color)
+              : (rule.failedColor ??
+              failedDescriptionColor ??
+              descriptionStyle.color),
         );
 
         return Column(
@@ -89,7 +100,10 @@ class PasswordValidation extends StatelessWidget {
                 widgetToShow,
                 const SizedBox(width: 6),
                 Expanded(
-                  child: Text(rule.description, style: effectiveDescriptionStyle),
+                  child: Text(
+                    rule.description,
+                    style: effectiveDescriptionStyle,
+                  ),
                 ),
               ],
             ),
